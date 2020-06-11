@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.social.dao.SecRefundDao">
+    
+	<sql id="secRefundColumns">
+		a.id AS "id",
+		a.order_id AS "orderId",
+		a.refund_reason AS "refundReason",
+		a.refund_status AS "refundStatus",
+		a.create_date AS "createDate",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks"
+	</sql>
+	
+	<sql id="secRefundJoins">
+	</sql>
+    
+	<select id="get" resultType="SecRefund">
+		SELECT 
+			<include refid="secRefundColumns"/>
+		FROM sec_refund a
+		<include refid="secRefundJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SecRefund">
+		SELECT 
+			<include refid="secRefundColumns"/>
+		FROM sec_refund a
+		<include refid="secRefundJoins"/>
+		<where>
+			1=1 
+			<if test="orderId != null and orderId != ''">
+				AND a.orderId like 
+						<if test="dbName == 'oracle'">'%'||#{orderId}||'%'</if>
+						<if test="dbName == 'mssql'">'%'+#{orderId}+'%'</if>
+						<if test="dbName == 'mysql'">CONCAT('%', #{orderId}, '%')</if>
+			</if>
+			<if test="refundStatus != null and refundStatus != ''">
+				AND a.refund_status = #{refundStatus}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SecRefund">
+		SELECT 
+			<include refid="secRefundColumns"/>
+		FROM sec_refund a
+		<include refid="secRefundJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sec_refund(
+			id,
+			order_id,
+			refund_reason,
+			refund_status,
+			create_date,
+			update_date,
+			remarks
+		) VALUES (
+			#{id},
+			#{orderId},
+			#{refundReason},
+			#{refundStatus},
+			#{createDate},
+			#{updateDate},
+			#{remarks}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sec_refund SET 	
+			order_id = #{orderId},
+			refund_reason = #{refundReason},
+			refund_status = #{refundStatus},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM sec_refund
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
