@@ -92,7 +92,7 @@ public class HttpUtils {
 
 			os = connection.getOutputStream();
 
-			os.write(param.getBytes());
+			os.write(param.getBytes("UTF-8"));
 			if (connection.getResponseCode() == 200) {
 				is = connection.getInputStream();
 

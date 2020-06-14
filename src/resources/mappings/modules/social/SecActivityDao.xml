@@ -71,6 +71,9 @@
 			<if test="state != null and state != ''">
 				AND a.state = #{state} 
 			</if>
+			<if test="noCancle != null and noCancle != ''">
+				AND a.activity_status != '1'
+			</if>
 			<if test="beginDate != null and beginDate != ''">
 				AND a.begin_date &gt;= #{beginDate} 
 			</if>

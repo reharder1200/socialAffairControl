@@ -44,6 +44,7 @@ public class SecActivity extends DataEntity<SecActivity> {
 	
 	private String state;
 	private String additOpinion;
+	private String noCancle;//指示非取消的活动
 	
 	public static String STATE_WAIT = "0";//待审核
 	public static String STATE_SUCCESS = "2";//审核成功
@@ -276,6 +277,14 @@ public class SecActivity extends DataEntity<SecActivity> {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getNoCancle() {
+		return noCancle;
+	}
+
+	public void setNoCancle(String noCancle) {
+		this.noCancle = noCancle;
 	}
 	
 }

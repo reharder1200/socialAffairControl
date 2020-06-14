@@ -4,6 +4,7 @@
 package com.thinkgem.jeesite.modules.social.web;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ import com.google.gson.Gson;
 import com.thinkgem.jeesite.common.config.Global;
 import com.thinkgem.jeesite.common.persistence.Page;
 import com.thinkgem.jeesite.common.web.BaseController;
+import com.thinkgem.jeesite.common.utils.DateUtils;
 import com.thinkgem.jeesite.common.utils.StringUtils;
 import com.thinkgem.jeesite.modules.social.entity.SecActivity;
 import com.thinkgem.jeesite.modules.social.entity.SecUser;
@@ -140,6 +142,7 @@ public class SecActivityController extends BaseController {
 		if(StringUtils.isBlank(secActivity.getState())){
 			secActivity.setState("0");
 		}
+		secActivity.setNoCancle("1");  //未取消的活动
 		Page<SecActivity> pageParam = new Page<SecActivity>(request, response);
 		pageParam.setOrderBy("state asc");
 		Page<SecActivity> page = secActivityService.findPage(pageParam, secActivity); 
@@ -183,19 +186,22 @@ public class SecActivityController extends BaseController {
 		if(StringUtils.isBlank(secActivity.getState()) || secActivity.getState().equals(SecActivity.STATE_WAIT)){
 			addMessage(redirectAttributes, "审核出现异常！");
 		}else if(secActivity.getState().equals(SecActivity.STATE_FAIL)){
-			addMessage(redirectAttributes, "活动审核不通过！");
+			addMessage(redirectAttributes, "审核结果：不通过！");
 			secActivityService.save(secActivity);
 			
 			//消息提醒
-			String param = "activityId=" + secActivity.getId()+"&content=\'" + secActivity.getTitle()+"活动审核失败，失败原因："+secActivity.getAdditOpinion()+"\'&userId="+secActivity.getActivityStarter().getId()+"&cmsId=630703&remarks=\'活动审核不通过\'";
+			String param = "activityId=" + secActivity.getId()+"&content=\""+DateUtils.formatDateTime(new Date())+"\",\"" + secActivity.getTitle()+"活动审核失败，失败原因："+secActivity.getAdditOpinion()+"\"&userId="+secActivity.getActivityStarter().getId()+"&cmsId=630703&remarks=活动审核不通过";
+			System.out.println("----"+param);
 			String result = HttpUtils.doPost(Global.getConfig("MESSAGE_URL"),param);
 			
 		}else if(secActivity.getState().equals(SecActivity.STATE_SUCCESS)){
-			addMessage(redirectAttributes, "活动审核成功！");
+			addMessage(redirectAttributes, "审核结果：成功！");
 			secActivityService.save(secActivity);
 			
 			//消息提醒
-			String param = "activityId=" + secActivity.getId()+"&content=\'" + secActivity.getTitle()+"活动审核成功，请密切关注活动报名情况\'&userId="+secActivity.getActivityStarter().getId()+"&cmsId=630703&remarks=\'活动审核成功\'";
+			String param = "activityId=" + secActivity.getId()+"&content=\""+DateUtils.formatDateTime(new Date())+"\",\"" + secActivity.getTitle()+"活动审核成功，请密切关注活动报名情况\"&userId="+secActivity.getActivityStarter().getId()+"&cmsId=630703&remarks=活动审核成功";
+			System.out.println("----"+param);
+			
 			String result = HttpUtils.doPost(Global.getConfig("MESSAGE_URL"),param);
 		}
 		return "redirect:"+Global.getAdminPath()+"/social/secActivity/approveList?repage";

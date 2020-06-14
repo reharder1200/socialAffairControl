@@ -71,7 +71,7 @@
 					${secActivity.title}
 				</a></td>
 				<%-- <td>${fns:getDictLabel(secActivity.type, 'activity_type', '')}</td> --%>
-				<td>${secActivity.activityStarter.nickName}</td>
+				<td>${secActivity.activityStarter.nickname}</td>
 				<td><fmt:formatDate value="${secActivity.beginDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<td><fmt:formatDate value="${secActivity.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<td>${secActivity.contactMobile}</td>
