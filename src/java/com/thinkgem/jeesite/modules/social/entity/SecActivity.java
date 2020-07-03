@@ -22,6 +22,7 @@ public class SecActivity extends DataEntity<SecActivity> {
 	private String type;		// 活动类别(0桌游 1棋牌 2唱歌 3其他 )
 	private Date beginDate;		// 开始时间
 	private Date endDate;		// 结束时间
+	private Date closingDate;	//报名截止时间
 	private String minPeople;		// 最少人数
 	private String maxPeople;		// 最大人数
 	private String province;		// 省编码
@@ -44,7 +45,6 @@ public class SecActivity extends DataEntity<SecActivity> {
 	
 	private String state;
 	private String additOpinion;
-	private String noCancle;//指示非取消的活动
 	
 	public static String STATE_WAIT = "0";//待审核
 	public static String STATE_SUCCESS = "2";//审核成功
@@ -279,12 +279,12 @@ public class SecActivity extends DataEntity<SecActivity> {
 		this.location = location;
 	}
 
-	public String getNoCancle() {
-		return noCancle;
+	public Date getClosingDate() {
+		return closingDate;
 	}
 
-	public void setNoCancle(String noCancle) {
-		this.noCancle = noCancle;
+	public void setClosingDate(Date closingDate) {
+		this.closingDate = closingDate;
 	}
 	
 }

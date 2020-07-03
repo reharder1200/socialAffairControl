@@ -8,6 +8,7 @@
 		a.type AS "type",
 		a.begin_date AS "beginDate",
 		a.end_date AS "endDate",
+		a.closing_date AS "closingDate",
 		a.min_people AS "minPeople",
 		a.max_people AS "maxPeople",
 		a.province AS "province",
@@ -71,9 +72,6 @@
 			<if test="state != null and state != ''">
 				AND a.state = #{state} 
 			</if>
-			<if test="noCancle != null and noCancle != ''">
-				AND a.activity_status != '1'
-			</if>
 			<if test="beginDate != null and beginDate != ''">
 				AND a.begin_date &gt;= #{beginDate} 
 			</if>
@@ -86,7 +84,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.id,a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -104,7 +102,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.id,a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -116,6 +114,7 @@
 			type,
 			begin_date,
 			end_date,
+			closing_date,
 			min_people,
 			max_people,
 			province,
@@ -148,6 +147,7 @@
 			#{type},
 			#{beginDate},
 			#{endDate},
+			#{closingDate},
 			#{minPeople},
 			#{maxPeople},
 			#{province},
@@ -184,6 +184,7 @@
 			type = #{type},
 			begin_date = #{beginDate},
 			end_date = #{endDate},
+			closing_date = #{closingDate},
 			min_people = #{minPeople},
 			max_people = #{maxPeople},
 			province = #{province},

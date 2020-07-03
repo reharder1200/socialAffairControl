@@ -142,7 +142,6 @@ public class SecActivityController extends BaseController {
 		if(StringUtils.isBlank(secActivity.getState())){
 			secActivity.setState("0");
 		}
-		secActivity.setNoCancle("1");  //未取消的活动
 		Page<SecActivity> pageParam = new Page<SecActivity>(request, response);
 		pageParam.setOrderBy("state asc");
 		Page<SecActivity> page = secActivityService.findPage(pageParam, secActivity); 

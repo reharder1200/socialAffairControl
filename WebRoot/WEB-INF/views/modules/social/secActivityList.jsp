@@ -56,7 +56,7 @@
 				<th>标题</th>
 				<th>活动类别</th>
 				<th>开始时间</th>
-				<th>结束时间</th>
+				<th>报名截止时间</th>
 				<th>联系人电话</th>
 				<th>活动状态</th>
 				<th>更新时间</th>
@@ -72,7 +72,7 @@
 				</a></td>
 				<td>${fns:getDictLabel(secActivity.type, 'activity_type', '')}</td>
 				<td><fmt:formatDate value="${secActivity.beginDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-				<td><fmt:formatDate value="${secActivity.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<td><fmt:formatDate value="${secActivity.closingDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<td>${secActivity.contactMobile}</td>
 				<td>${fns:getDictLabel(secActivity.activityStatus, 'activity_status', '')}</td>
 				<td>

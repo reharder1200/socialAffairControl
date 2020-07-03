@@ -103,6 +103,7 @@ public class SecRefundController extends BaseController {
 			if (result != null) {
 				JSONObject jsonObject = JSONObject.fromObject(result);
 				if (((Boolean) jsonObject.get("result")).booleanValue()) {
+					secRefund = secRefundService.get(secRefund);//接口工程修改了退款订单的订单号，所以需要重新查询一次
 					if (jsonObject.get("wxResponse").toString()
 							.equals("SUCCESS")) {
 						secRefund

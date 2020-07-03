@@ -37,6 +37,13 @@
 		});
 		function dealActivity(param){
 			if($("#inputForm").validate()){
+				var value = $("#additOpinion").val();
+				if(param==1){
+					if( value == null || value == ""){
+						alert("请填写审批意见！");
+						return;
+					}
+				}
 				$("#state").val(param);
 				$("#inputForm").submit();
 			}
@@ -247,7 +254,7 @@
 		<div class="control-group">
 			<label class="control-label">审批意见：</label>
 			<div class="controls">
-				<form:textarea path="additOpinion" htmlEscape="false" rows="4" maxlength="500" class="input-xxlarge required"/>
+				<form:textarea path="additOpinion" id="additOpinion" htmlEscape="false" rows="4" maxlength="500" class="input-xxlarge"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

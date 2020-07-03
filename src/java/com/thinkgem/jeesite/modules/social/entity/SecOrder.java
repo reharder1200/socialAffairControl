@@ -4,6 +4,7 @@
 package com.thinkgem.jeesite.modules.social.entity;
 
 import org.hibernate.validator.constraints.Length;
+
 import com.thinkgem.jeesite.common.persistence.DataEntity;
 
 /**
@@ -19,6 +20,14 @@ public class SecOrder extends DataEntity<SecOrder> {
 	private String payType;		// 支付方式(0微信 1支付宝 3银行卡 4其他)
 	private String payStatus;		// 支付状态(0待支付 1已支付 2已退款)
 	private String totalAmount;		// 总金额
+	private String activityId; //活动ID
+	private String openid;  // 微信用户唯一标识
+	
+	private SecActivity secActivity;	//活动表
+	private SecUser secUser;		//用户表
+	
+	private String title;	//筛选条件  活动标题
+	private String nickname;	//筛选条件  昵称
 	
 	public SecOrder() {
 		super();
@@ -70,6 +79,54 @@ public class SecOrder extends DataEntity<SecOrder> {
 
 	public void setTotalAmount(String totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public String getActivityId() {
+		return activityId;
+	}
+
+	public void setActivityId(String activityId) {
+		this.activityId = activityId;
+	}
+
+	public String getOpenid() {
+		return openid;
+	}
+
+	public void setOpenid(String openid) {
+		this.openid = openid;
+	}
+
+	public SecActivity getSecActivity() {
+		return secActivity;
+	}
+
+	public void setSecActivity(SecActivity secActivity) {
+		this.secActivity = secActivity;
+	}
+
+	public SecUser getSecUser() {
+		return secUser;
+	}
+
+	public void setSecUser(SecUser secUser) {
+		this.secUser = secUser;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	
 }

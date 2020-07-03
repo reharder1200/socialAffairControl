@@ -25,6 +25,12 @@ public class SecRefund extends DataEntity<SecRefund> {
 	public static String REFUND_STATUS_DONE = "1";
 	public static String REFUND_STATUS_COMPLETE = "2";
 	
+	private SecActivity secActivity;	//活动表
+	private SecUser secUser;		//用户表
+	
+	private String title;	//筛选条件  活动标题
+	private String nickname;	//筛选条件  昵称
+	
 	public SecRefund() {}
 	
 	public SecRefund(String id)
@@ -103,6 +109,38 @@ public class SecRefund extends DataEntity<SecRefund> {
 	public void setOutRefundNo(String outRefundNo)
 	{
 	  this.outRefundNo = outRefundNo;
+	}
+
+	public SecActivity getSecActivity() {
+		return secActivity;
+	}
+
+	public void setSecActivity(SecActivity secActivity) {
+		this.secActivity = secActivity;
+	}
+
+	public SecUser getSecUser() {
+		return secUser;
+	}
+
+	public void setSecUser(SecUser secUser) {
+		this.secUser = secUser;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 		
 }

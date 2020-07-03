@@ -56,7 +56,7 @@
 				<!-- <th>活动类别</th> -->
 				<th>发起人</th>
 				<th>开始时间</th>
-				<th>结束时间</th>
+				<th>报名截止时间</th>
 				<th>联系人电话</th>
 				<th>审核状态</th>
 				<th>更新时间</th>
@@ -73,7 +73,7 @@
 				<%-- <td>${fns:getDictLabel(secActivity.type, 'activity_type', '')}</td> --%>
 				<td>${secActivity.activityStarter.nickname}</td>
 				<td><fmt:formatDate value="${secActivity.beginDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-				<td><fmt:formatDate value="${secActivity.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+				<td><fmt:formatDate value="${secActivity.closingDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				<td>${secActivity.contactMobile}</td>
 				<td>${fns:getDictLabel(secActivity.state, 'activity_state', '')}</td>
 				<td>
@@ -83,6 +83,10 @@
 					${secActivity.remarks}
 				</td>
 				<td>
+				<c:if test="${secActivity.activityStatus == 1}">
+					<label style="color:red;">活动已取消</label>
+				</c:if>
+				<c:if test="${secActivity.activityStatus != 1}">
 				<shiro:hasPermission name="social:secActivity:approve">
 					<c:if test="${secActivity.state == 0}">
 						<a href="${ctx}/social/secActivity/approveForm?id=${secActivity.id}">审核</a>
@@ -91,6 +95,7 @@
 						<a href="${ctx}/social/secActivity/approveShow?id=${secActivity.id}">查看</a>
 					</c:if>
 				</shiro:hasPermission>
+				</c:if>
 				</td>
 			</tr>
 		</c:forEach>

@@ -84,7 +84,7 @@
 					${fns:getDictLabel(secUser.status, 'user_status', '')}
 				</td>
 				<td>
-					<fmt:formatDate value="${secUser.registerDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${secUser.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${fns:getDictLabel(secUser.isRealName, 'yes_no', '')}

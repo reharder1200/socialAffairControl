@@ -25,8 +25,11 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>订单号：</label>
-				<form:input path="orderId" htmlEscape="false" maxlength="50" class="input-medium"/>
+			<li><label>昵称：</label>
+				<form:input path="nickname" htmlEscape="false" maxlength="50" class="input-medium"/>
+			</li>
+			<li><label>活动标题：</label>
+				<form:input path="title" htmlEscape="false" maxlength="50" class="input-medium"/>
 			</li>
 			<li><label>订单类型：</label>
 				<form:select path="orderType" class="input-medium">
@@ -54,6 +57,9 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>昵称</th>
+				<th>电话</th>
+				<th>活动标题</th>
 				<th>订单号</th>
 				<th>订单类型</th>
 				<th>总金额</th>
@@ -67,9 +73,19 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="secOrder">
 			<tr>
-				<td><a href="${ctx}/social/secOrder/form?orderId=${secOrder.orderId}">
+				<td><a href="${ctx}/social/secUser/form?id=${secOrder.secUser.id}">
+					${secOrder.secUser.nickname}
+				</a>
+				</td>
+				<td>${secOrder.secUser.mobile}
+				</td>
+				<td><a href="${ctx}/social/secActivity/form?id=${secOrder.secActivity.id}">
+					${secOrder.secActivity.title}
+				</a>
+				</td>
+				<td><%-- <a href="${ctx}/social/secOrder/form?orderId=${secOrder.orderId}"></a> --%>
 					${secOrder.orderId}
-				</a></td>
+				</td>
 				<td>${fns:getDictLabel(secOrder.orderType, 'order_type', '')} 
 				</td>
 				<td>${secOrder.totalAmount}

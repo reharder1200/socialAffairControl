@@ -25,8 +25,11 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>订单号：</label>
-				<form:input path="orderId" htmlEscape="false" maxlength="50" class="input-medium"/>
+			<li><label>昵称：</label>
+				<form:input path="nickname" htmlEscape="false" maxlength="50" class="input-medium"/>
+			</li>
+			<li><label>活动标题：</label>
+				<form:input path="title" htmlEscape="false" maxlength="50" class="input-medium"/>
 			</li>
 			<li><label>退款状态：</label>
 				<form:select path="refundStatus" class="input-medium">
@@ -42,6 +45,9 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>昵称</th>
+				<th>电话</th>
+				<th>活动标题</th>
 				<th>商品订单号</th>
 				<th>退款原因</th>
 				<th>退款状态</th>
@@ -53,9 +59,18 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="secRefund">
 			<tr>
-				<td><a href="${ctx}/social/secOrder/form?orderId=${secRefund.orderId}">
+				<td><a href="${ctx}/social/secUser/form?id=${secRefund.secUser.id}">
+					${secRefund.secUser.nickname}
+				</a>
+				</td>
+				<td>${secRefund.secUser.mobile}
+				</td>
+				<td><a href="${ctx}/social/secActivity/form?id=${secRefund.secActivity.id}">
+					${secRefund.secActivity.title}
+				</a>
+				<td><%-- <a href="${ctx}/social/secOrder/form?orderId=${secRefund.orderId}"> --%>
 					${secRefund.orderId}
-				</a></td>
+				<!-- </a> --></td>
 				<td>
 					${secRefund.refundReason}
 				</td>

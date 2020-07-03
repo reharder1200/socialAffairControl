@@ -34,7 +34,7 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">订单号(待与前台统一订单号制定规则后挪到后台自动生成)：</label>
+			<label class="control-label">订单号：</label>
 			<div class="controls">
 				<form:input path="orderId" htmlEscape="false" maxlength="100" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>

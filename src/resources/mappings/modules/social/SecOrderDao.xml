@@ -11,13 +11,30 @@
 		a.total_amount AS "totalAmount",
 		a.create_date AS "createDate",
 		a.update_date AS "updateDate",
-		a.remarks AS "remarks"
+		a.activity_Id as "activityId",
+		a.openid as "openid",
+		a.remarks AS "remarks",
+		secActivity.id AS "secActivity.id",
+		secActivity.title AS "secActivity.title",
+		secUser.id AS "secUser.id",
+		secUser.nickname AS "secUser.nickname",
+		secUser.mobile AS "secUser.mobile"
 	</sql>
 	
 	<sql id="secOrderJoins">
+		left join sec_activity secActivity on secActivity.id = a.activity_Id 
+		left join sec_user secUser on secUser.wx_openid = a.openid 
 	</sql>
     
 	<select id="get" resultType="SecOrder">
+		SELECT 
+			<include refid="secOrderColumns"/>
+		FROM sec_order a
+		<include refid="secOrderJoins"/>
+		WHERE a.order_id = #{orderId}
+	</select>
+	
+	<select id="getByOrderId" resultType="SecOrder">
 		SELECT 
 			<include refid="secOrderColumns"/>
 		FROM sec_order a
@@ -31,21 +48,27 @@
 		FROM sec_order a
 		<include refid="secOrderJoins"/>
 		<where>
-			1=1 
-			<if test="orderId != null and orderId != ''">
-				AND a.orderId like 
-						<if test="dbName == 'oracle'">'%'||#{orderId}||'%'</if>
-						<if test="dbName == 'mssql'">'%'+#{orderId}+'%'</if>
-						<if test="dbName == 'mysql'">CONCAT('%', #{orderId}, '%')</if>
+		 1=1 
+			<if test="activityId != null and activityId != ''">
+				AND a.activity_Id = #{activityId} 
 			</if>
-			<if test="orderType != null and orderType != ''">
-				AND a.order_type = #{orderType}
-			</if>
-			<if test="payType != null and payType != ''">
-				AND a.pay_type = #{payType}
+			<if test="openid != null and openid != ''">
+				AND a.openid = #{openid} 
 			</if>
 			<if test="payStatus != null and payStatus != ''">
-				AND a.pay_status = #{payStatus}
+				AND a.pay_status = #{payStatus} 
+			</if>
+			<if test="nickname != null and nickname != ''">
+				AND secUser.nickname LIKE 
+					<if test="dbName == 'oracle'">'%'||#{nickname}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{nickname}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{nickname},'%')</if>
+			</if>
+			<if test="title != null and title != ''">
+				AND secActivity.title LIKE 
+					<if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
 			</if>
 		</where>
 		<choose>
@@ -53,7 +76,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY secUser.id,a.pay_type DESC,a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -84,6 +107,8 @@
 			pay_type,
 			pay_status,
 			total_amount,
+			activity_Id,
+			openid,
 			create_date,
 			update_date,
 			remarks
@@ -94,6 +119,8 @@
 			#{payType},
 			#{payStatus},
 			#{totalAmount},
+			#{activityId},
+			#{openid},
 			#{createDate},
 			#{updateDate},
 			#{remarks}
@@ -108,13 +135,15 @@
 			pay_status = #{payStatus},
 			total_amount = #{totalAmount},
 			update_date = #{updateDate},
+			activity_Id = #{activityId},
+			openid = #{openid},
 			remarks = #{remarks}
-		WHERE order_id = #{orderId}
+		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
 		DELETE FROM sec_order
-		WHERE order_id = #{orderId}
+		WHERE id = #{id}
 	</update>
 	
 </mapper>
